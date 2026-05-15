@@ -15,49 +15,10 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cookieParser());
-/*app.use(cors({
-  origin: (origin, callback) => {
-    const allowed = [
-      "http://localhost:5173",
-      "https://rent-wheels-chi.vercel.app"
-    ];
-    // Allow all vercel.app subdomains
-    if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));*/
 app.use(cors({
-  origin: (origin, callback) => {
-    // Always allow localhost for dev
-    if (!origin || origin === "http://localhost:5173") {
-      return callback(null, true);
-    }
-
-    // Allow your production domain
-    if (origin === "https://rent-wheels-chi.vercel.app") {
-      return callback(null, true);
-    }
-
-    // Allow all *.vercel.app subdomains (previews)
-    if (/\.vercel\.app$/.test(origin)) {
-      return callback(null, true);
-    }
-
-    // Block everything else
-    return callback(new Error("Not allowed by CORS"));
-  },
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: ["http://localhost:5173", "https://rent-wheels-chi.vercel.app"], 
   credentials: true,
 }));
-
-// Handle preflight requests globally
-app.options("*", cors());
-
 
 // Handle preflight requests globally
 app.options("*", cors());
