@@ -16,7 +16,18 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["http://localhost:5173", "https://rent-wheels-chi.vercel.app"], 
+  origin: (origin, callback) => {
+    const allowed = [
+      "http://localhost:5173",
+      "https://rent-wheels-chi.vercel.app"
+    ];
+    // Allow all vercel.app subdomains
+    if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
