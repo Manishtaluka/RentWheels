@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import VendorLayout from "../../components/VendorLayout";
 import toast from "react-hot-toast";
 import { FaCar, FaClipboardList, FaCheckCircle, FaClock } from "react-icons/fa";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function VendorDashboard() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -23,10 +24,10 @@ function VendorDashboard() {
   const fetchData = async () => {
     try {
       const [vRes, bRes] = await Promise.all([
-        fetch("/api/vendor/vehicles", {
+        fetch(apiUrl("/api/vendor/vehicles"), {
           headers: { Authorization: `Bearer ${accessToken}` },
         }),
-        fetch("/api/vendor/bookings", {
+        fetch(apiUrl("/api/vendor/bookings"), {
           headers: { Authorization: `Bearer ${accessToken}` },
         }),
       ]);

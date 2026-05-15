@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaCar, FaShieldAlt, FaMapMarkerAlt, FaStar } from "react-icons/fa";
-
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 function Home() {
   return (
     <div className="min-h-screen bg-white">

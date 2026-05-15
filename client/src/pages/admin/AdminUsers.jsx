@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function AdminUsers() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -21,7 +22,7 @@ function AdminUsers() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/admin/users", {
+      const res = await fetch(apiUrl("/api/admin/users"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -40,7 +41,7 @@ function AdminUsers() {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`/api/admin/user/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/user/${id}`), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-700",
@@ -26,7 +27,7 @@ function MyBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("/api/user/bookings", {
+      const res = await fetch(apiUrl("/api/user/bookings"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();

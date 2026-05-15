@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../../redux/slices/userSlice";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 // Validation rules
 const schema = z.object({
@@ -29,7 +30,7 @@ function SignIn() {
     dispatch(signInStart());
 
     try {
-      const res = await fetch("/api/auth/signin", {
+      const res = await fetch(apiUrl("/api/auth/signin"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import toast from "react-hot-toast";
 import { FaCheck, FaTrash } from "react-icons/fa";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function AdminVehicles() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -21,7 +22,7 @@ function AdminVehicles() {
 
   const fetchVehicles = async () => {
     try {
-      const res = await fetch("/api/admin/vehicles", {
+      const res = await fetch(apiUrl("/api/admin/vehicles"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -39,7 +40,7 @@ function AdminVehicles() {
 
   const handleApprove = async (id) => {
     try {
-      const res = await fetch(`/api/admin/vehicle/approve/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/vehicle/approve/${id}`), {
         method: "PUT",
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -59,7 +60,7 @@ function AdminVehicles() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this vehicle?")) return;
     try {
-      const res = await fetch(`/api/admin/vehicle/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/vehicle/${id}`), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import VendorLayout from "../../components/VendorLayout";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function AddVehicle() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -40,7 +41,7 @@ function AddVehicle() {
       });
       images.forEach((img) => form.append("images", img));
 
-      const res = await fetch("/api/vendor/add-vehicle", {
+      const res = await fetch(apiUrl("/api/vendor/add-vehicle"), {
         method: "POST",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: form,

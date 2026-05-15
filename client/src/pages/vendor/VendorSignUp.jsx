@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 const schema = z.object({
   username: z.string().min(3, "Minimum 3 characters required"),
@@ -25,7 +26,7 @@ function VendorSignUp() {
   const onSubmit = async (formData) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/vendor/signup", {
+      const res = await fetch(apiUrl("/api/vendor/signup"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

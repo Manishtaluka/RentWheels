@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-700",
@@ -27,7 +28,7 @@ function AdminBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("/api/admin/bookings", {
+      const res = await fetch(apiUrl("/api/admin/bookings"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -45,7 +46,7 @@ function AdminBookings() {
 
   const handleStatusChange = async (id, status) => {
     try {
-      const res = await fetch(`/api/admin/booking/status/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/booking/status/${id}`), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

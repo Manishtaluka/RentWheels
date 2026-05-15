@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import VehicleCard from "../../components/VehicleCard";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function Vehicles() {
   const [vehicles, setVehicles] = useState([]);
@@ -17,7 +18,7 @@ function Vehicles() {
 
   const fetchVehicles = async () => {
     try {
-      const res = await fetch("/api/user/vehicles");
+      const res = await fetch(apiUrl("/api/user/vehicles"));
       const data = await res.json();
       if (!res.ok) {
         toast.error("Failed to load vehicles");

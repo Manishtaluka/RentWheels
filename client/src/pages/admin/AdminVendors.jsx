@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import toast from "react-hot-toast";
 import { FaCheck, FaTimes, FaTrash } from "react-icons/fa";
-
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 function AdminVendors() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function AdminVendors() {
 
   const fetchVendors = async () => {
     try {
-      const res = await fetch("/api/admin/vendors", {
+      const res = await fetch(apiUrl("/api/admin/vendors"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -39,7 +39,7 @@ function AdminVendors() {
 
   const handleApprove = async (id) => {
     try {
-      const res = await fetch(`/api/admin/vendor/approve/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/vendor/approve/${id}`), {
         method: "PUT",
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -58,7 +58,7 @@ function AdminVendors() {
 
   const handleReject = async (id) => {
     try {
-      const res = await fetch(`/api/admin/vendor/reject/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/vendor/reject/${id}`), {
         method: "PUT",
         headers: { Authorization: `Bearer ${accessToken}` },
       });
@@ -78,7 +78,7 @@ function AdminVendors() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this vendor?")) return;
     try {
-      const res = await fetch(`/api/admin/vendor/${id}`, {
+      const res = await fetch(apiUrl(`/api/admin/vendor/${id}`), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

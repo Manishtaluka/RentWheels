@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import VendorLayout from "../../components/VendorLayout";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-700",
@@ -28,7 +29,7 @@ function VendorBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("/api/vendor/bookings", {
+      const res = await fetch(apiUrl("/api/vendor/bookings"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();

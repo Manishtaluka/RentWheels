@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateUserSuccess, signOut } from "../../redux/slices/userSlice";
 import toast from "react-hot-toast";
 import Navbar from "../../components/Navbar";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function Profile() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -49,7 +50,7 @@ function Profile() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/user/update", {
+      const res = await fetch(apiUrl("/api/user/update"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +80,7 @@ function Profile() {
       const form = new FormData();
       form.append("image", imageFile);
 
-      const res = await fetch("/api/user/update-picture", {
+      const res = await fetch(apiUrl("/api/user/update-picture"), {
         method: "PUT",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: form,
@@ -113,7 +114,7 @@ function Profile() {
     }
     setPasswordLoading(true);
     try {
-      const res = await fetch("/api/user/update-password", {
+      const res = await fetch(apiUrl("/api/user/update-password"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -146,7 +147,7 @@ function Profile() {
   const handleDeleteAccount = async () => {
     if (!window.confirm("Are you sure you want to delete your account? This cannot be undone.")) return;
     try {
-      const res = await fetch("/api/user/delete", {
+      const res = await fetch(apiUrl("/api/user/delete"), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

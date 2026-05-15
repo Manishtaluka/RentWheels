@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 import {
   FaGasPump,
   FaUsers,
@@ -30,7 +31,7 @@ function VehicleDetail() {
 
   const fetchVehicle = async () => {
     try {
-      const res = await fetch(`/api/user/vehicles/${id}`);
+      const res = await fetch(apiUrl(`/api/user/vehicles/${id}`));
       const data = await res.json();
       if (!res.ok) {
         toast.error("Vehicle not found");
@@ -76,7 +77,7 @@ function VehicleDetail() {
 
     setBooking(true);
     try {
-      const res = await fetch("/api/user/booking", {
+      const res = await fetch(apiUrl("/api/user/booking"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

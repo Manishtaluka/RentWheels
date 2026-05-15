@@ -5,6 +5,7 @@ import VendorLayout from "../../components/VendorLayout";
 import toast from "react-hot-toast";
 import { FaTrash, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function VendorVehicles() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -22,7 +23,7 @@ function VendorVehicles() {
 
   const fetchVehicles = async () => {
     try {
-      const res = await fetch("/api/vendor/vehicles", {
+      const res = await fetch(apiUrl("/api/vendor/vehicles"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();
@@ -41,7 +42,7 @@ function VendorVehicles() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this vehicle?")) return;
     try {
-      const res = await fetch(`/api/vendor/vehicle/${id}`, {
+      const res = await fetch(apiUrl(`/api/vendor/vehicle/${id}`), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { updateUserSuccess, signOut } from "../../redux/slices/userSlice";
 import VendorLayout from "../../components/VendorLayout";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 
 function VendorProfile() {
   const { currentUser, accessToken } = useSelector((state) => state.user);
@@ -48,7 +49,7 @@ function VendorProfile() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("/api/vendor/update", {
+      const res = await fetch(apiUrl("/api/vendor/update"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +79,7 @@ function VendorProfile() {
       const form = new FormData();
       form.append("image", imageFile);
 
-      const res = await fetch("/api/vendor/update-picture", {
+      const res = await fetch(apiUrl("/api/vendor/update-picture"), {
         method: "PUT",
         headers: { Authorization: `Bearer ${accessToken}` },
         body: form,
@@ -112,7 +113,7 @@ function VendorProfile() {
     }
     setPasswordLoading(true);
     try {
-      const res = await fetch("/api/vendor/update-password", {
+      const res = await fetch(apiUrl("/api/vendor/update-password"), {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -145,7 +146,7 @@ function VendorProfile() {
   const handleDeleteAccount = async () => {
     if (!window.confirm("Delete your vendor account? This cannot be undone.")) return;
     try {
-      const res = await fetch("/api/vendor/delete", {
+      const res = await fetch(apiUrl("/api/vendor/delete"), {
         method: "DELETE",
         headers: { Authorization: `Bearer ${accessToken}` },
       });

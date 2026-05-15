@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import AdminLayout from "../../components/AdminLayout";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
 import {
   FaUsers,
   FaStore,
@@ -41,7 +42,7 @@ function AdminDashboard() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("/api/admin/dashboard", {
+      const res = await fetch(apiUrl("/api/admin/dashboard"), {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
       const data = await res.json();

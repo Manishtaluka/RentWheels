@@ -6,6 +6,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { signInSuccess } from "../../redux/slices/userSlice";
 import toast from "react-hot-toast";
+import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
+
 
 const schema = z.object({
   email: z.string().email("Invalid email address"),
@@ -26,7 +28,7 @@ function VendorSignIn() {
   const onSubmit = async (formData) => {
     setLoading(true);
     try {
-      const res = await fetch("/api/vendor/signin", {
+      const res = await fetch(apiUrl("/api/vendor/signin"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
