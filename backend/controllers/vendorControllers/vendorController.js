@@ -197,15 +197,21 @@ export const getVendorBookings = async (req, res, next) => {
 export const updateVendorPassword = async (req, res, next) => {
   try {
     const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return next(errorHandler(400, "Current and new password are required"));
+    }
+    if (newPassword.length < 6) {
+      return next(errorHandler(400, "New password must be at least 6 characters"));
+    }
     const vendor = await Vendor.findById(req.user.id);
     if (!vendor) {
       return next(errorHandler(404, "Vendor not found"));
     }
-    const validPassword = bcryptjs.compareSync(currentPassword, vendor.password);
+    const validPassword = await bcryptjs.compare(currentPassword, vendor.password);
     if (!validPassword) {
       return next(errorHandler(401, "Current password is wrong"));
     }
-    const hashedPassword = bcryptjs.hashSync(newPassword, 10);
+    const hashedPassword = await bcryptjs.hash(newPassword, 10);
     await Vendor.findByIdAndUpdate(req.user.id, {
       $set: { password: hashedPassword },
     });
