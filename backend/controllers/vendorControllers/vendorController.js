@@ -3,7 +3,8 @@ import Vehicle from "../../models/vehicleModel.js";
 import Booking from "../../models/bookingModel.js";
 import { errorHandler } from "../../utils/error.js";
 import { uploadToCloudinary } from "../../utils/cloudinaryConfig.js";
-
+import mongoose from "mongoose";
+import bcryptjs from "bcryptjs";
 // =====================
 // GET VENDOR PROFILE
 // =====================
@@ -158,7 +159,9 @@ export const getVendorBookings = async (req, res, next) => {
   try {
     const bookings = await Booking.aggregate([
       {
-        $match: { vendorId: req.user.id }
+        $match: {
+          vendorId: new mongoose.Types.ObjectId(req.user.id), // ✅ convert to ObjectId
+        },
       },
       {
         $lookup: {
@@ -181,6 +184,65 @@ export const getVendorBookings = async (req, res, next) => {
     ]);
 
     res.status(200).json(bookings);
+  } catch (error) {
+    console.log(error);
+    next(errorHandler(500, "error in getVendorBookings"));
+  }
+};
+
+
+// =====================
+// UPDATE VENDOR PASSWORD
+// =====================
+export const updateVendorPassword = async (req, res, next) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const vendor = await Vendor.findById(req.user.id);
+    if (!vendor) {
+      return next(errorHandler(404, "Vendor not found"));
+    }
+    const validPassword = bcryptjs.compareSync(currentPassword, vendor.password);
+    if (!validPassword) {
+      return next(errorHandler(401, "Current password is wrong"));
+    }
+    const hashedPassword = bcryptjs.hashSync(newPassword, 10);
+    await Vendor.findByIdAndUpdate(req.user.id, {
+      $set: { password: hashedPassword },
+    });
+    res.status(200).json({ message: "Password updated successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// =====================
+// UPDATE VENDOR PICTURE
+// =====================
+export const updateVendorPicture = async (req, res, next) => {
+  try {
+    if (!req.file) {
+      return next(errorHandler(400, "No image provided"));
+    }
+    const result = await uploadToCloudinary(req.file.buffer, "profiles");
+    const updatedVendor = await Vendor.findByIdAndUpdate(
+      req.user.id,
+      { $set: { profilePicture: result.secure_url } },
+      { new: true }
+    );
+    const { password, refreshToken, ...vendorData } = updatedVendor._doc;
+    res.status(200).json(vendorData);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// =====================
+// DELETE VENDOR
+// =====================
+export const deleteVendor = async (req, res, next) => {
+  try {
+    await Vendor.findByIdAndDelete(req.user.id);
+    res.status(200).json({ message: "Vendor account deleted" });
   } catch (error) {
     next(error);
   }

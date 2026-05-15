@@ -6,6 +6,7 @@ import Home from "./pages/user/Home.jsx";
 import Vehicles from "./pages/user/Vehicles.jsx";
 import VehicleDetail from "./pages/user/VehicleDetail.jsx";
 import MyBookings from "./pages/user/MyBookings.jsx";
+import Profile from "./pages/user/Profile.jsx";
 import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
 import AdminUsers from "./pages/admin/AdminUsers.jsx";
 import AdminVendors from "./pages/admin/AdminVendors.jsx";
@@ -16,6 +17,8 @@ import VendorSignIn from "./pages/vendor/VendorSignIn.jsx";
 import VendorDashboard from "./pages/vendor/VendorDashboard.jsx";
 import AddVehicle from "./pages/vendor/AddVehicle.jsx";
 import VendorVehicles from "./pages/vendor/VendorVehicles.jsx";
+import VendorBookings from "./pages/vendor/VendorBookings.jsx";
+import VendorProfile from "./pages/vendor/VendorProfile.jsx"; 
 
 function App() {
   return (
@@ -28,6 +31,7 @@ function App() {
         <Route path="/vehicles" element={<><Navbar /><Vehicles /></>} />
         <Route path="/vehicles/:id" element={<><Navbar /><VehicleDetail /></>} />
         <Route path="/my-bookings" element={<><Navbar /><MyBookings /></>} />
+        <Route path="/profile" element={<><Navbar /><Profile /></>} />
 
         {/* Admin routes */}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
@@ -42,6 +46,8 @@ function App() {
         <Route path="/vendor/dashboard" element={<VendorDashboard />} />
         <Route path="/vendor/add-vehicle" element={<AddVehicle />} />
         <Route path="/vendor/vehicles" element={<VendorVehicles />} />
+        <Route path="/vendor/bookings" element={<VendorBookings />} />
+        <Route path="/vendor/profile" element={<VendorProfile />} />
       </Routes>
     </BrowserRouter>
   );
