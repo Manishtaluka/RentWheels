@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: ["http://localhost:5173", "https://rent-wheels-chi.vercel.app/"], // ✅ add your frontend URL here
+  origin: "https://rent-wheels-chi.vercel.app/", // ✅ add your frontend URL here
   credentials: true,
 }));
 
