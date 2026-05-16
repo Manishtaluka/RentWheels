@@ -204,42 +204,44 @@ export const googleAuth = async (req, res, next) => {
 
 
 
-// =====================
-// FORGOT PASSWORD — Send OTP
-// =====================
 export const forgotPassword = async (req, res, next) => {
   const { email } = req.body;
   try {
+    console.log("Forgot password request for:", email); // ✅ add this
+
     const user = await User.findOne({ email });
     if (!user) return next(errorHandler(404, "No account with this email"));
 
-    // Generate 6 digit OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiry = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+    const expiry = new Date(Date.now() + 10 * 60 * 1000);
 
     await User.findByIdAndUpdate(user._id, {
       resetOtp: otp,
       resetOtpExpiry: expiry,
     });
 
-    // Send OTP email
+    console.log("OTP generated:", otp); // ✅ add this
+    console.log("Sending email to:", email); // ✅ add this
+
     await sendEmail(
       email,
       "RentWheels Password Reset OTP",
       `
-        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto;">
+        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; padding: 20px;">
           <h2 style="color: #16a34a;">RentWheels Password Reset</h2>
           <p>Your OTP for password reset is:</p>
-          <h1 style="letter-spacing: 8px; color: #16a34a;">${otp}</h1>
+          <h1 style="letter-spacing: 8px; color: #16a34a; font-size: 36px;">${otp}</h1>
           <p>This OTP is valid for <strong>10 minutes</strong>.</p>
-          <p>If you did not request this, please ignore this email.</p>
+          <p style="color: #888;">If you did not request this, please ignore this email.</p>
         </div>
       `
     );
 
+    console.log("Email sent successfully ✅"); // ✅ add this
     res.status(200).json({ message: "OTP sent to your email" });
 
   } catch (error) {
+    console.log("Forgot password error:", error.message); // ✅ add this
     next(errorHandler(500, "Failed to send OTP"));
   }
 };
