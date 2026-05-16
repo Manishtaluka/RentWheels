@@ -15,13 +15,24 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-  origin: ["http://localhost:5173", "https://rent-wheels-chi.vercel.app"], 
-  credentials: true,
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://rent-wheels-chi.vercel.app", // ✅ your exact vercel URL
+];
 
-// Handle preflight requests globally
-app.options("*", cors());
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+  })
+);
 
 mongoose
   .connect(process.env.MONGO_URI)
