@@ -7,6 +7,10 @@ import { useDispatch } from "react-redux";
 import { signInStart, signInSuccess, signInFailure } from "../../redux/slices/userSlice";
 import toast from "react-hot-toast";
 import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
+import GoogleLogin from "../../components/GoogleLogin.jsx";
+
+
+
 
 // Validation rules
 const schema = z.object({
@@ -146,8 +150,28 @@ function SignIn() {
               Vendor Sign In
             </Link>
           </div>
+          {/* Google Login — inside the card */}
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="flex-1 h-px bg-gray-200"></span>
+                <span className="text-xs text-gray-400">OR</span>
+                <span className="flex-1 h-px bg-gray-200"></span>
+              </div>
+              <GoogleLogin />
+            </div>
+             
+        
+            <div className="text-right">
+              <Link
+                to="/forgot-password"
+                className="text-xs text-green-600 hover:underline"
+              >
+                Forgot Password?
+              </Link>
+            </div>
         </form>
       </div>
+      
     </div>
   );
 }

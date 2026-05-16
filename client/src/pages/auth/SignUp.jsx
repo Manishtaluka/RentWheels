@@ -5,6 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { apiUrl } from "../../utils/api.js"; // adjust path based on file location
+import GoogleLogin from "../../components/GoogleLogin.jsx";
 
 // Validation rules
 const schema = z.object({
@@ -136,8 +137,18 @@ function SignUp() {
               Sign In
             </Link>
           </p>
+           {/* Google Login */}
+          <div className="mt-4">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="flex-1 h-px bg-gray-200"></span>
+                <span className="text-xs text-gray-400">OR</span>
+                <span className="flex-1 h-px bg-gray-200"></span>
+              </div>
+              <GoogleLogin />
+          </div>
         </form>
       </div>
+     
     </div>
   );
 }

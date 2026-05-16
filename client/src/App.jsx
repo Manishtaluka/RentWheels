@@ -19,6 +19,9 @@ import AddVehicle from "./pages/vendor/AddVehicle.jsx";
 import VendorVehicles from "./pages/vendor/VendorVehicles.jsx";
 import VendorBookings from "./pages/vendor/VendorBookings.jsx";
 import VendorProfile from "./pages/vendor/VendorProfile.jsx"; 
+import ForgotPassword from "./pages/auth/ForgotPassword.jsx";
+
+
 
 function App() {
   return (
@@ -32,6 +35,8 @@ function App() {
         <Route path="/vehicles/:id" element={<><Navbar /><VehicleDetail /></>} />
         <Route path="/my-bookings" element={<><Navbar /><MyBookings /></>} />
         <Route path="/profile" element={<><Navbar /><Profile /></>} />
+        // Add route
+        <Route path="/forgot-password" element={<><Navbar /><ForgotPassword /></>} />
 
         {/* Admin routes */}
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
