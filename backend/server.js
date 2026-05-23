@@ -6,7 +6,11 @@ import cookieParser from "cookie-parser";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
 import vendorRoute from "./routes/vendorRoute.js";
-import adminRoute from "./routes/adminRoute.js";  // ✅ add this
+import adminRoute from "./routes/adminRoute.js";  
+import paymentRoute from "./routes/paymentRoute.js";
+
+
+
 
 dotenv.config();
 
@@ -43,7 +47,8 @@ mongoose
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 app.use("/api/vendor", vendorRoute);
-app.use("/api/admin", adminRoute);  // ✅ add this
+app.use("/api/admin", adminRoute);  
+app.use("/api/payment", paymentRoute);
 
 app.get("/", (req, res) => {
   res.json({ message: "Server is running!" });
